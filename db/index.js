@@ -1,5 +1,5 @@
 const db = require("./db");
-const { Project, Task } = require("./models")
+const { Project, Task } = require("./models/index")
 
 const initDb = (force = false) => {
     return db
@@ -7,13 +7,18 @@ const initDb = (force = false) => {
         .then(() => {
             Project.hasMany(Task);
             Task.belongsTo(Project);
-            
+
             return db.sync({force});
         })
 };
 
 // sequelize.sync({force: true});
-
 // process.exit(0);
 
-module.exports = initDb;
+module.exports = {
+    initDb,
+    models: {
+        Project,
+        Task
+    }
+}
